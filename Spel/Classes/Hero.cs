@@ -16,7 +16,9 @@ namespace Spel.Classes
         private Vector2 speed;
         private int scale, width, height;
 
-        Animation animatie;
+        Animation runAnimation, attackAnimation, staticAnimation, jumpAnimation, deathAnimation;
+        AnimationManager animationManager;
+
         public Hero(Texture2D texture, IInputReader inputReader)
         {
             this.heroTexture = texture;
@@ -24,13 +26,35 @@ namespace Spel.Classes
 
             speed = new Vector2(5, 10);
             position = new Vector2(0, 0);
-            scale = 1;
+            scale = 2;
             this.width = 64;
             this.height = 64;
 
-            animatie = new Animation();
-            animatie.AddSpriteRow(this.width, this.height, 2, 6);
+            // Animaties ingeven.
+            runAnimation = new Animation();
+            runAnimation.AddSpriteRow(this.width, this.height, 0, 11);
+            
+            attackAnimation = new Animation();
+            attackAnimation.AddSpriteRow(this.width, this.height, 1, 6);
+            
+            staticAnimation = new Animation();
+            staticAnimation.AddSpriteRow(this.width, this.height, 2, 6);
+            
+            jumpAnimation = new Animation();
+            jumpAnimation.AddSpriteRow(this.width, this.height, 3, 3);
+            
+            deathAnimation = new Animation();
+            deathAnimation.AddSpriteRow(this.width, this.height, 4, 3);
 
+            // Huidige animatie intialiseren.
+            animationManager = new AnimationManager();
+            this.SetCurrentAnimation(staticAnimation);
+
+        }
+
+        public void SetCurrentAnimation(Animation animation)
+        {
+            animationManager.CurrentAnimation = animation;
         }
 
         public void Update(GameTime gameTime)
@@ -38,15 +62,16 @@ namespace Spel.Classes
             var direction = inputReader.ReadInput();
             direction *= speed;
             position += direction;
-            animatie.Update(gameTime);
+            animationManager.CurrentAnimation.Update(gameTime);
             Move();
         }
-
 
         public void Draw(SpriteBatch spriteBatch)
         {
             int rotation = 0;
-            spriteBatch.Draw(heroTexture, position, animatie.CurrFrame.srcRectangle,
+            //spriteBatch.Draw(heroTexture, position, animatie.CurrFrame.srcRectangle,
+            //  Color.White, rotation, new Vector2(0, 0), scale, 0f, 0f);
+            spriteBatch.Draw(heroTexture, position, animationManager.CurrentAnimation.CurrFrame.srcRectangle,
                 Color.White, rotation, new Vector2(0, 0), scale, 0f, 0f);
         }
 

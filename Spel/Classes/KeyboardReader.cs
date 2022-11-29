@@ -33,6 +33,10 @@ namespace Spel.Classes
             {
                 direction.Y += 1;
             }
+            if (state.IsKeyDown(Keys.Space))
+            {
+                
+            }
             return direction;
 
         }
