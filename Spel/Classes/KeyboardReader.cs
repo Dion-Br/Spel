@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using SharpDX.MediaFoundation;
 using Spel.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace Spel.Classes
         {
             KeyboardState state = Keyboard.GetState();
             Vector2 direction = Vector2.Zero;
+
             if (state.IsKeyDown(Keys.Left))
             {
                 direction.X -= 1;
@@ -33,12 +35,31 @@ namespace Spel.Classes
             {
                 direction.Y += 1;
             }
-            if (state.IsKeyDown(Keys.Space))
-            {
-                
-            }
             return direction;
 
+        }
+
+        public bool ReadMovement()
+        {
+            KeyboardState state = Keyboard.GetState();
+            bool moving = false;
+            if (state.IsKeyDown(Keys.Left))
+            {
+                moving = true;
+            }
+            if (state.IsKeyDown(Keys.Right))
+            {
+                moving = true;
+            }
+            if (state.IsKeyDown(Keys.Up))
+            {
+                moving = true;
+            }
+            if (state.IsKeyDown(Keys.Down))
+            {
+                moving = true;
+            }
+            return moving;
         }
     }
 }

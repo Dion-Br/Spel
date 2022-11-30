@@ -31,26 +31,13 @@ namespace Spel.Classes
             this.height = 64;
 
             // Animaties ingeven.
-            runAnimation = new Animation();
-            runAnimation.AddSpriteRow(this.width, this.height, 0, 11);
-            
-            attackAnimation = new Animation();
-            attackAnimation.AddSpriteRow(this.width, this.height, 1, 6);
-            
-            staticAnimation = new Animation();
-            staticAnimation.AddSpriteRow(this.width, this.height, 2, 6);
-            
-            jumpAnimation = new Animation();
-            jumpAnimation.AddSpriteRow(this.width, this.height, 3, 3);
-            
-            deathAnimation = new Animation();
-            deathAnimation.AddSpriteRow(this.width, this.height, 4, 3);
+            MakeAnimations();            
 
             // Huidige animatie intialiseren.
             animationManager = new AnimationManager();
             this.SetCurrentAnimation(staticAnimation);
 
-        }
+        }        
 
         public void SetCurrentAnimation(Animation animation)
         {
@@ -60,6 +47,17 @@ namespace Spel.Classes
         public void Update(GameTime gameTime)
         {
             var direction = inputReader.ReadInput();
+            bool moving = inputReader.ReadMovement();
+
+            if (moving)
+            {
+                this.SetCurrentAnimation(runAnimation);
+            }
+            else
+            {
+                this.SetCurrentAnimation(staticAnimation);
+            }
+
             direction *= speed;
             position += direction;
             animationManager.CurrentAnimation.Update(gameTime);
@@ -100,6 +98,24 @@ namespace Spel.Classes
                 position.Y = 0;
             }
 
+        }
+
+        private void MakeAnimations()
+        {
+            runAnimation = new Animation();
+            runAnimation.AddSpriteRow(this.width, this.height, 0, 11);
+
+            attackAnimation = new Animation();
+            attackAnimation.AddSpriteRow(this.width, this.height, 1, 6);
+
+            staticAnimation = new Animation();
+            staticAnimation.AddSpriteRow(this.width, this.height, 2, 6);
+
+            jumpAnimation = new Animation();
+            jumpAnimation.AddSpriteRow(this.width, this.height, 3, 3);
+
+            deathAnimation = new Animation();
+            deathAnimation.AddSpriteRow(this.width, this.height, 4, 3);
         }
     }
 }
