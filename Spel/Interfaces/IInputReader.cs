@@ -10,7 +10,6 @@ namespace Spel.Interfaces
     internal interface IInputReader
     {
         Vector2 ReadInput();
-        bool ReadMovement();
         public bool IsDestinationInput { get; }
 
     }

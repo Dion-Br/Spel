@@ -13,6 +13,21 @@ namespace Spel.Classes
     public class KeyboardReader : IInputReader
     {
         public bool IsDestinationInput => false;
+        public Movement movement { get; private set; } = new Movement();
+
+        private int speed = 1;
+
+        public int Speed
+        {
+            get { return speed; }
+            set { 
+                if(value > 0)
+                    speed = value;
+                else 
+                    speed = 1;
+            }
+        }
+
 
         public Vector2 ReadInput()
         {
@@ -21,45 +36,49 @@ namespace Spel.Classes
 
             if (state.IsKeyDown(Keys.Left))
             {
-                direction.X -= 1;
+                direction.X -= speed;
+                movement.HDirection = HDirection.Left;
+                
             }
             if (state.IsKeyDown(Keys.Right)) 
             {
-                direction.X += 1;
+                direction.X += speed;
+                movement.HDirection = HDirection.Right;
             }
             if (state.IsKeyDown(Keys.Up))
             {
-                direction.Y -= 1;
+                direction.Y -= speed;
+                movement.VDirection = VDirection.Up;
             }
             if (state.IsKeyDown(Keys.Down))
             {
-                direction.Y += 1;
+                direction.Y += speed;
+                movement.VDirection = VDirection.Down;
             }
             return direction;
-
         }
 
         public bool ReadMovement()
         {
+            // If any movement button is touched the function will return true
             KeyboardState state = Keyboard.GetState();
-            bool moving = false;
-            if (state.IsKeyDown(Keys.Left))
+            if (state.IsKeyDown(Keys.Left) || state.IsKeyDown(Keys.Right) || state.IsKeyDown(Keys.Up) || state.IsKeyDown(Keys.Down))
+                return true;
+
+            return false;
+        }
+
+        public bool ReadAttack()
+        {
+            KeyboardState state = Keyboard.GetState();
+            bool attack = false;
+
+            if (state.IsKeyDown(Keys.Space))
             {
-                moving = true;
+                attack = true;
             }
-            if (state.IsKeyDown(Keys.Right))
-            {
-                moving = true;
-            }
-            if (state.IsKeyDown(Keys.Up))
-            {
-                moving = true;
-            }
-            if (state.IsKeyDown(Keys.Down))
-            {
-                moving = true;
-            }
-            return moving;
+
+            return attack;
         }
     }
 }

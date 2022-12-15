@@ -5,16 +5,19 @@ using System.Collections.Generic;
 using System.Text;
 using Spel.Interfaces;
 using SharpDX.Direct3D9;
+using System.Text.RegularExpressions;
 
 namespace Spel.Classes
 {
     class Hero:IGameObject
     {
-        private IInputReader inputReader;
+        // Variabelen initialiseren
+        private KeyboardReader inputReader;
         private Texture2D heroTexture;
         private Vector2 position;
         private Vector2 speed;
         private int scale, width, height;
+        private SpriteEffects se = SpriteEffects.None;
 
         Animation runAnimation, attackAnimation, staticAnimation, jumpAnimation, deathAnimation;
         AnimationManager animationManager;
@@ -22,7 +25,7 @@ namespace Spel.Classes
         public Hero(Texture2D texture, IInputReader inputReader)
         {
             this.heroTexture = texture;
-            this.inputReader = inputReader;
+            this.inputReader = (KeyboardReader)inputReader;
 
             speed = new Vector2(5, 10);
             position = new Vector2(0, 0);
@@ -39,7 +42,7 @@ namespace Spel.Classes
 
         }        
 
-        public void SetCurrentAnimation(Animation animation)
+        void SetCurrentAnimation(Animation animation)
         {
             animationManager.CurrentAnimation = animation;
         }
@@ -48,15 +51,9 @@ namespace Spel.Classes
         {
             var direction = inputReader.ReadInput();
             bool moving = inputReader.ReadMovement();
+            bool attack = inputReader.ReadAttack();
 
-            if (moving)
-            {
-                this.SetCurrentAnimation(runAnimation);
-            }
-            else
-            {
-                this.SetCurrentAnimation(staticAnimation);
-            }
+            CheckAnimationToSet(moving, attack);
 
             direction *= speed;
             position += direction;
@@ -64,13 +61,46 @@ namespace Spel.Classes
             Move();
         }
 
+        void CheckAnimationToSet(bool moving, bool attack)
+        {
+            
+
+
+            if (inputReader.movement.HDirection == HDirection.Left)
+            {
+                se = SpriteEffects.FlipHorizontally;
+            }
+            if (inputReader.movement.HDirection == HDirection.Right)
+            {
+                se = SpriteEffects.None;
+            }
+            if (inputReader.movement.VDirection == VDirection.Up)
+            {
+            }
+            if (inputReader.movement.VDirection == VDirection.Down)
+            {
+            }
+
+            if (moving)
+            {
+                SetCurrentAnimation(runAnimation);
+            }
+            else
+            {
+                SetCurrentAnimation(staticAnimation);
+            }
+
+            if (attack)
+            {
+                SetCurrentAnimation(attackAnimation);
+            }
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             int rotation = 0;
-            //spriteBatch.Draw(heroTexture, position, animatie.CurrFrame.srcRectangle,
-            //  Color.White, rotation, new Vector2(0, 0), scale, 0f, 0f);
             spriteBatch.Draw(heroTexture, position, animationManager.CurrentAnimation.CurrFrame.srcRectangle,
-                Color.White, rotation, new Vector2(0, 0), scale, 0f, 0f);
+                Color.White, rotation, new Vector2(0, 0), scale, se, 0f);
         }
 
         private void Move()
@@ -97,6 +127,11 @@ namespace Spel.Classes
             {
                 position.Y = 0;
             }
+
+        }
+
+        public void Attack()
+        {
 
         }
 
