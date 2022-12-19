@@ -16,18 +16,7 @@ namespace Spel.Classes
         public Movement movement { get; private set; } = new Movement();
         public bool Jump { get; private set; }
 
-        private int speed = 1;
-
-        public int Speed
-        {
-            get { return speed; }
-            set { 
-                if(value > 0)
-                    speed = value;
-                else 
-                    speed = 1;
-            }
-        }
+        private int speed = 1;       
 
 
         public Vector2 ReadInput()
@@ -53,27 +42,28 @@ namespace Spel.Classes
             }
             if (state.IsKeyDown(Keys.Up))
             {
-                if (this.ReadMovement())
-                {
-                    Jump = true;
-                    movement.VDirection = VDirection.Up;
-                }
+                Jump = true;
+                movement.VDirection = VDirection.Up;             
+            }
+            else
+            {
+                Jump = false;
             }
             if (state.IsKeyDown(Keys.Down))
             {
-                if (this.ReadMovement())
-                {
-                    movement.VDirection = VDirection.Down;
-                }
+                movement.VDirection = VDirection.Down;
             }
             return direction;
         }
 
         public bool ReadMovement()
         {
-            // If any movement button is touched the function will return true
+            // Getting keyboard state
             KeyboardState state = Keyboard.GetState();
+
+            // Returning false if both left and right are being pressed at the same time
             if (state.IsKeyDown(Keys.Left) && state.IsKeyDown(Keys.Right)) return false;
+            // Returning true if any movement is being made
             if (state.IsKeyDown(Keys.Left) || state.IsKeyDown(Keys.Right)) return true;
 
             return false;
