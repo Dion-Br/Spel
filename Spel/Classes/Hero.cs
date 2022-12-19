@@ -15,7 +15,7 @@ namespace Spel.Classes
         // Variabelen initialiseren
         public KeyboardReader inputReader { get; set; }
         public bool jump { get; set; } = false;
-        bool hasJumped;
+        bool hasJumped, reachedTop;
 
         private Texture2D heroTexture;
         private Vector2 position;
@@ -33,7 +33,7 @@ namespace Spel.Classes
             this.heroTexture = texture;
             this.inputReader = (KeyboardReader)inputReader;
 
-            this.speed = new Vector2(5, 5);
+            this.speed = new Vector2(8, 5);
             this.position = new Vector2(50, 20);
             this.scale = 2;
             this.width = 64;
@@ -140,30 +140,28 @@ namespace Spel.Classes
             }
 
             // Jump instellen 
-            if (jump && hasJumped == false)
+            if (jump && !hasJumped && !reachedTop)
             {
-                position.Y -= 120f;
-                speed.Y = -60f;
                 hasJumped = true;
             }
-            if (hasJumped == true)
+            if (hasJumped && !reachedTop)
             {
-                speed.Y -= 0.15f * 1;
+                position.Y -= 15;
+                speed.X = 10;
             }
-            if(position.Y > bottomBorder)
+            if(hasJumped && reachedTop)
+            {
+                position.Y += 10;
+            }
+            if (hasJumped && position.Y <= bottomBorder - 100)
+            {
+                reachedTop = true;
+            }
+            if(position.Y >= bottomBorder)
             {
                 hasJumped = false;
-            }
-            if (hasJumped == false)
-            {
-                speed.Y = 0f;
-            }
-
-            // Y Pos
-            // Zwaartekracht als we ons boven grondniveau bevinden
-            if (position.Y <= bottomBorder && hasJumped)
-            {
-                position.Y += gravity;
+                reachedTop = false;
+                speed.X = 8f;
             }
         }
 
