@@ -9,7 +9,8 @@ using System.Text.RegularExpressions;
 
 namespace Spel.Classes
 {
-    class Hero:IGameObject
+    // Bron jump + gravity: https://www.youtube.com/watch?v=ZLxIShw-7ac
+    class Hero : IGameObject 
     {
         // Variabelen initialiseren
         private KeyboardReader inputReader;
@@ -27,17 +28,17 @@ namespace Spel.Classes
             this.heroTexture = texture;
             this.inputReader = (KeyboardReader)inputReader;
 
-            speed = new Vector2(5, 10);
-            position = new Vector2(0, 0);
-            scale = 2;
+            this.speed = new Vector2(5, 5);
+            this.position = new Vector2(0, 0);
+            this.scale = 2;
             this.width = 64;
             this.height = 64;
 
             // Animaties ingeven.
-            MakeAnimations();            
+            this.MakeAnimations();            
 
             // Huidige animatie intialiseren.
-            animationManager = new AnimationManager();
+            this.animationManager = new AnimationManager();
             this.SetCurrentAnimation(staticAnimation);
 
         }        
@@ -63,8 +64,6 @@ namespace Spel.Classes
 
         void CheckAnimationToSet(bool moving, bool attack)
         {
-            
-
 
             if (inputReader.movement.HDirection == HDirection.Left)
             {
@@ -73,12 +72,6 @@ namespace Spel.Classes
             if (inputReader.movement.HDirection == HDirection.Right)
             {
                 se = SpriteEffects.None;
-            }
-            if (inputReader.movement.VDirection == VDirection.Up)
-            {
-            }
-            if (inputReader.movement.VDirection == VDirection.Down)
-            {
             }
 
             if (moving)
@@ -105,8 +98,8 @@ namespace Spel.Classes
 
         private void Move()
         {
-            int windowWidth = GraphicsDeviceManager.DefaultBackBufferWidth;
-            int windowHeight = GraphicsDeviceManager.DefaultBackBufferHeight;
+            int windowWidth = 1400;
+            int windowHeight = 700;
 
             // X Positioning
             if (position.X > windowWidth - (this.width * scale))
@@ -119,6 +112,10 @@ namespace Spel.Classes
             }
 
             // Y positioning
+            if (position.Y < windowHeight - (this.height * scale))
+            {
+                position.Y += 5;
+            }
             if (position.Y > windowHeight - (this.height * scale))
             {
                 position.Y = windowHeight - (this.height * scale);
@@ -127,12 +124,6 @@ namespace Spel.Classes
             {
                 position.Y = 0;
             }
-
-        }
-
-        public void Attack()
-        {
-
         }
 
         private void MakeAnimations()

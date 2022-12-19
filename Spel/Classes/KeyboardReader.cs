@@ -14,6 +14,7 @@ namespace Spel.Classes
     {
         public bool IsDestinationInput => false;
         public Movement movement { get; private set; } = new Movement();
+        public bool Jump { get; private set; }
 
         private int speed = 1;
 
@@ -36,24 +37,34 @@ namespace Spel.Classes
 
             if (state.IsKeyDown(Keys.Left))
             {
-                direction.X -= speed;
-                movement.HDirection = HDirection.Left;
-                
+                if (this.ReadMovement())
+                {
+                    direction.X -= speed;
+                    movement.HDirection = HDirection.Left;                
+                }
             }
             if (state.IsKeyDown(Keys.Right)) 
             {
-                direction.X += speed;
-                movement.HDirection = HDirection.Right;
+                if (this.ReadMovement())
+                {
+                    direction.X += speed;
+                    movement.HDirection = HDirection.Right;
+                }
             }
             if (state.IsKeyDown(Keys.Up))
             {
-                direction.Y -= speed;
-                movement.VDirection = VDirection.Up;
+                if (this.ReadMovement())
+                {
+                    Jump = true;
+                    movement.VDirection = VDirection.Up;
+                }
             }
             if (state.IsKeyDown(Keys.Down))
             {
-                direction.Y += speed;
-                movement.VDirection = VDirection.Down;
+                if (this.ReadMovement())
+                {
+                    movement.VDirection = VDirection.Down;
+                }
             }
             return direction;
         }
@@ -62,8 +73,8 @@ namespace Spel.Classes
         {
             // If any movement button is touched the function will return true
             KeyboardState state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.Left) || state.IsKeyDown(Keys.Right) || state.IsKeyDown(Keys.Up) || state.IsKeyDown(Keys.Down))
-                return true;
+            if (state.IsKeyDown(Keys.Left) && state.IsKeyDown(Keys.Right)) return false;
+            if (state.IsKeyDown(Keys.Left) || state.IsKeyDown(Keys.Right)) return true;
 
             return false;
         }
