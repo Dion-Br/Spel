@@ -21,7 +21,7 @@ namespace Spel.Classes
         private Vector2 position;
         private Vector2 speed;
 
-        private int scale, width, height, gravity;
+        private int scale, width, height;
         private SpriteEffects se = SpriteEffects.None;
 
         Animation runAnimation, attackAnimation, staticAnimation, jumpAnimation, deathAnimation;
@@ -34,7 +34,7 @@ namespace Spel.Classes
             this.inputReader = (KeyboardReader)inputReader;
 
             this.speed = new Vector2(8, 5);
-            this.position = new Vector2(50, 20);
+            this.position = new Vector2(50, 600);
             this.scale = 2;
             this.width = 64;
             this.height = 64;
@@ -116,18 +116,20 @@ namespace Spel.Classes
         }
 
         private void Move()
+        {  
+            // Horizontal movement 
+            MoveX();
+
+            // Vertical movement
+            Jump();   
+        }
+
+        private void MoveX()
         {
             // Variabelen initialiseren
             int widthBorder = 1400;
-            int heightBorder = 700;
-
             int rightBorder = widthBorder - (this.width * scale);
-            int bottomBorder = heightBorder - (this.height * scale);
 
-            // Kijken of we op Jump knop hebben gedrukt
-            jump = inputReader.Jump;
-
-            // X Pos
             // Hero mag niet uit de rechterkant van het scherm lopen
             if (position.X > rightBorder)
             {
@@ -138,30 +140,52 @@ namespace Spel.Classes
             {
                 position.X = 0;
             }
+        }
+        
+        
+        float i = 1, startingJumpPos = 600;
 
+        private void Jump()
+        {
+            // Kijken of we op Jump knop hebben gedrukt
+            jump = inputReader.Jump;
+
+            // Variabelen initialiseren
+            int heightBorder = 700;
+            int bottomBorder = heightBorder - (this.height * scale);
+            
             // Jump instellen 
+            // Begin: Op jump gedrukt
             if (jump && !hasJumped && !reachedTop)
             {
                 hasJumped = true;
+                startingJumpPos = position.Y;
             }
+            // Tweede: Omhoog gaan
             if (hasJumped && !reachedTop)
             {
-                position.Y -= 15;
-                speed.X = 10;
+                i *= 1.8f;
+                position.Y -= Math.Max(30 - i, 7);
+                speed.X = 9;
             }
-            if(hasJumped && reachedTop)
-            {
-                position.Y += 10;
-            }
-            if (hasJumped && position.Y <= bottomBorder - 100)
+            // Derde: Controleren of we de top hebben geraakt
+            if (hasJumped && position.Y <= startingJumpPos - 150)
             {
                 reachedTop = true;
             }
-            if(position.Y >= bottomBorder)
+            // Vierde: Omlaag vallen
+            if (hasJumped && reachedTop)
             {
+                position.Y += 10;
+            }       
+            // Einde: We hebben onze startpositie bereikt
+            if (position.Y >= startingJumpPos)
+            {
+                i = 1;
+                speed.X = 8f;
                 hasJumped = false;
                 reachedTop = false;
-                speed.X = 8f;
+                position.Y = startingJumpPos;
             }
         }
 
