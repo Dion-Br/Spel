@@ -9,23 +9,18 @@ using System.IO.Pipes;
 
 namespace Spel
 {
-    // Game states
     public class Game1 : Game
     {
+        private GameState CurrentGameState;
+        private GameState NextGameState;
+
+        public void ChangeState(GameState newState)
+        {
+            NextGameState = newState;
+        }
+
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-
-        private MainMenu mainMenu;
-        private Playing playing;
-        private GameOver gameOver;
-
-        enum GameState
-        {
-            MainMenu,
-            Playing,
-            GameOver
-        }
-        GameState CurrentGameState = GameState.MainMenu;
 
         public Game1()
         {
@@ -49,9 +44,7 @@ namespace Spel
         {
             // TODO: use this.Content to load your game content here
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            playing = new Playing(this, _graphics.GraphicsDevice, Content);
-            mainMenu = new MainMenu(this, _graphics.GraphicsDevice, Content);
-            gameOver = new GameOver(this, _graphics.GraphicsDevice, Content);
+            CurrentGameState = new MainMenu(this, _graphics.GraphicsDevice, Content);
         }
 
         protected override void Update(GameTime gameTime)
@@ -59,19 +52,14 @@ namespace Spel
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // Update in current state
-            switch (CurrentGameState)
+            if (NextGameState!= null)
             {
-                case GameState.MainMenu:
-                    mainMenu.Update(gameTime);
-                    break;
-                case GameState.Playing:
-                    playing.Update(gameTime);
-                    break;
-                case GameState.GameOver:
-                    gameOver.Update(gameTime);
-                    break;
-            };
+                CurrentGameState = NextGameState;
+                NextGameState = null;
+            }
+
+            CurrentGameState.Update(gameTime);
+
             base.Update(gameTime);
         }
 
@@ -82,19 +70,7 @@ namespace Spel
 
             _spriteBatch.Begin();
 
-            // Draw in current state
-            switch (CurrentGameState)
-            {
-                case GameState.MainMenu:
-                    mainMenu.Draw(gameTime, _spriteBatch);
-                    break;
-                case GameState.Playing:
-                    playing.Draw(gameTime, _spriteBatch);
-                    break;
-                case GameState.GameOver:
-                    gameOver.Draw(gameTime, _spriteBatch);
-                    break;
-            };
+            CurrentGameState.Draw(gameTime, _spriteBatch);
 
             // End
             _spriteBatch.End();            

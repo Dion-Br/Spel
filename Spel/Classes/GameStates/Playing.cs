@@ -28,6 +28,7 @@ namespace Spel.Classes.GameStates
 
             _heroTexture = _content.Load<Texture2D>("sprite");
             _backgroundTexture = _content.Load<Texture2D>("background");
+
             hero = new Hero(_heroTexture, KBReader);
             background = new Background(_backgroundTexture);
         }

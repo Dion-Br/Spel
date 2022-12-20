@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Spel.Classes.GameStates
 {
     // Bron: https://github.com/Oyyou/MonoGame_Tutorials/blob/master/MonoGame_Tutorials/Tutorial013
-    abstract class GameState
+    public abstract class GameState
     {
         protected Game _game;
         protected GraphicsDevice _graphicsDevice;

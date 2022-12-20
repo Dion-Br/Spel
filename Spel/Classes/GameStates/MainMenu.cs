@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Spel.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -18,9 +19,13 @@ namespace Spel.Classes.GameStates
         private Texture2D _backgroundTexture, _btnStartTexture, _btnCloseTexture;
         private Background background;
         private cButton btnStart, btnClose;
+        new readonly Game1 _game;
 
         public MainMenu(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
+            // Game inladen
+            _game = game;
+
             // Textures inladen
             _backgroundTexture = _content.Load<Texture2D>("mainscreen");
             _btnStartTexture = _content.Load<Texture2D>("play");
@@ -41,6 +46,17 @@ namespace Spel.Classes.GameStates
 
         public override void Update(GameTime gameTime)
         {
+            // Knoppen updaten
+            btnStart.Update();
+            btnClose.Update();
+
+            // Actie voor als er op een menu knop is gedrukt
+            if (btnStart.Clicked)
+                _game.ChangeState(new Playing(_game, _graphicsDevice, _content));
+
+
+            if (btnClose.Clicked)
+                Application.Exit();
         }
     }
 }
