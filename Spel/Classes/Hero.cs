@@ -38,7 +38,6 @@ namespace Spel.Classes
             this.scale = 2;
             this.width = 64;
             this.height = 64;
-            this.gravity = 10;
             this.hasJumped = true;
 
             // Animaties ingeven.
