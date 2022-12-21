@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Spel.Classes
+namespace Spel.Classes.Animations
 {
     internal class Animation
     {
@@ -22,10 +22,10 @@ namespace Spel.Classes
         private double secondCounter = 0;
         public void AddSpriteRow(int width, int height, int row, int numberOfSpritesInRow)
         {
-            for (int i = 0; i < numberOfSpritesInRow; i++) 
+            for (int i = 0; i < numberOfSpritesInRow; i++)
             {
-                frames.Add(new AnimationFrame(new Rectangle((width * i), row * height, width, height)));
-            }            
+                frames.Add(new AnimationFrame(new Rectangle(width * i, row * height, width, height)));
+            }
         }
 
         public void Update(GameTime gameTime)

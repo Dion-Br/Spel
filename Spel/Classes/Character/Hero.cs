@@ -6,8 +6,9 @@ using System.Text;
 using Spel.Interfaces;
 using SharpDX.Direct3D9;
 using System.Text.RegularExpressions;
+using Spel.Classes.Animations;
 
-namespace Spel.Classes
+namespace Spel.Classes.Character
 {
     // Bron jump + gravity: https://www.youtube.com/watch?v=ZLxIShw-7ac
     class Hero : IGameObject
@@ -30,24 +31,24 @@ namespace Spel.Classes
 
         public Hero(Texture2D texture, IInputReader inputReader)
         {
-            this.heroTexture = texture;
+            heroTexture = texture;
             this.inputReader = (KeyboardReader)inputReader;
 
-            this.speed = new Vector2(8, 5);
-            this.position = new Vector2(50, 400);
-            this.scale = 2;
-            this.width = 64;
-            this.height = 64;
-            this.hasJumped = true;
+            speed = new Vector2(8, 5);
+            position = new Vector2(50, 400);
+            scale = 2;
+            width = 64;
+            height = 64;
+            hasJumped = true;
 
             // Animaties ingeven.
-            this.MakeAnimations();            
+            MakeAnimations();
 
             // Huidige animatie intialiseren.
-            this.animationManager = new AnimationManager();
-            this.SetCurrentAnimation(staticAnimation);
+            animationManager = new AnimationManager();
+            SetCurrentAnimation(staticAnimation);
 
-        }        
+        }
 
         void SetCurrentAnimation(Animation animation)
         {
@@ -64,7 +65,7 @@ namespace Spel.Classes
 
             // Kijken of hero aanvalt
             bool attack = inputReader.ReadAttack();
-            
+
             // Juiste animatie plaatsen adhv van vorige meegegeven variabelen
             CheckAnimationToSet(moving, attack);
 
@@ -76,7 +77,7 @@ namespace Spel.Classes
 
             // Animatie updaten
             animationManager.CurrentAnimation.Update(gameTime);
-            
+
             // Bewegen naar de posities die zijn berekend
             Move();
         }
@@ -100,7 +101,7 @@ namespace Spel.Classes
                 SetCurrentAnimation(attackAnimation);
 
             // Jump animation als we springen / in de lucht zijn
-            if (hasJumped) 
+            if (hasJumped)
                 SetCurrentAnimation(jumpAnimation);
         }
 
@@ -115,19 +116,19 @@ namespace Spel.Classes
         }
 
         private void Move()
-        {  
+        {
             // Horizontal movement 
             MoveX();
 
             // Vertical movement
-            Jump();   
+            Jump();
         }
 
         private void MoveX()
         {
             // Variabelen initialiseren
             int widthBorder = 1400;
-            int rightBorder = widthBorder - (this.width * scale);
+            int rightBorder = widthBorder - width * scale;
 
             // Hero mag niet uit de rechterkant van het scherm lopen
             if (position.X > rightBorder)
@@ -140,8 +141,8 @@ namespace Spel.Classes
                 position.X = 0;
             }
         }
-        
-        
+
+
         float i = 1, startingJumpPos = 600;
 
         private void Jump()
@@ -151,8 +152,8 @@ namespace Spel.Classes
 
             // Variabelen initialiseren
             int heightBorder = 700;
-            int bottomBorder = heightBorder - (this.height * scale);
-            
+            int bottomBorder = heightBorder - height * scale;
+
             // Jump instellen 
             // Begin: Op jump gedrukt
             if (jump && !hasJumped && !reachedTop)
@@ -176,7 +177,7 @@ namespace Spel.Classes
             if (hasJumped && reachedTop)
             {
                 position.Y += 10;
-            }       
+            }
             // Einde: We hebben onze startpositie bereikt
             if (position.Y >= startingJumpPos)
             {
@@ -192,19 +193,19 @@ namespace Spel.Classes
         {
             // Set all the animation for the hero
             runAnimation = new Animation();
-            runAnimation.AddSpriteRow(this.width, this.height, 0, 11);
+            runAnimation.AddSpriteRow(width, height, 0, 11);
 
             attackAnimation = new Animation();
-            attackAnimation.AddSpriteRow(this.width, this.height, 1, 6);
+            attackAnimation.AddSpriteRow(width, height, 1, 6);
 
             staticAnimation = new Animation();
-            staticAnimation.AddSpriteRow(this.width, this.height, 2, 6);
+            staticAnimation.AddSpriteRow(width, height, 2, 6);
 
             jumpAnimation = new Animation();
-            jumpAnimation.AddSpriteRow(this.width, this.height, 3, 3);
+            jumpAnimation.AddSpriteRow(width, height, 3, 3);
 
             deathAnimation = new Animation();
-            deathAnimation.AddSpriteRow(this.width, this.height, 4, 3);
+            deathAnimation.AddSpriteRow(width, height, 4, 3);
         }
     }
 }
