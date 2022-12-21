@@ -19,7 +19,7 @@ namespace Spel.Classes.GameStates
         private Texture2D _backgroundTexture, _btnStartTexture, _btnCloseTexture;
         private Background background;
         private cButton btnStart, btnClose;
-        new readonly Game1 _game;
+        new Game1 _game;
 
         public MainMenu(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
@@ -31,10 +31,12 @@ namespace Spel.Classes.GameStates
             _btnStartTexture = _content.Load<Texture2D>("play");
             _btnCloseTexture = _content.Load<Texture2D>("quit");
 
+
             // Initialiseren
             background = new Background(_backgroundTexture);
             btnStart = new cButton(_btnStartTexture, 610, 400);
             btnClose = new cButton(_btnCloseTexture, 610, 480);
+
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)

@@ -34,7 +34,7 @@ namespace Spel.Classes
             this.inputReader = (KeyboardReader)inputReader;
 
             this.speed = new Vector2(8, 5);
-            this.position = new Vector2(50, 600);
+            this.position = new Vector2(50, 400);
             this.scale = 2;
             this.width = 64;
             this.height = 64;

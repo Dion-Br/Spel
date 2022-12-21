@@ -11,6 +11,7 @@ namespace Spel
 {
     public class Game1 : Game
     {
+        // Game State instellingen
         private GameState CurrentGameState;
         private GameState NextGameState;
 
@@ -19,12 +20,13 @@ namespace Spel
             NextGameState = newState;
         }
 
+        // Variabelen declareren
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
         public Game1()
         {
-            // Setting window size
+            // Grootte van scherm instellen
             _graphics = new GraphicsDeviceManager(this);
             _graphics.PreferredBackBufferWidth = 1400;
             _graphics.PreferredBackBufferHeight = 787;
@@ -36,13 +38,11 @@ namespace Spel
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            // TODO: use this.Content to load your game content here
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             CurrentGameState = new MainMenu(this, _graphics.GraphicsDevice, Content);
         }
@@ -52,6 +52,7 @@ namespace Spel
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            // Update huidige game state
             if (NextGameState!= null)
             {
                 CurrentGameState = NextGameState;
@@ -67,9 +68,9 @@ namespace Spel
         {
             // Clear
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
             _spriteBatch.Begin();
 
+            // Teken huidige game state
             CurrentGameState.Draw(gameTime, _spriteBatch);
 
             // End
