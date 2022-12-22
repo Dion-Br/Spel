@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using SharpDX.Direct3D9;
 using Spel.Classes;
 using Spel.Classes.GameStates;
+using Spel.Classes.Level;
 using System;
 using System.IO.Pipes;
 
@@ -14,6 +15,7 @@ namespace Spel
         // Game State instellingen
         private GameState CurrentGameState;
         private GameState NextGameState;
+        public Map map;
 
         public void ChangeState(GameState newState)
         {
@@ -38,6 +40,7 @@ namespace Spel
 
         protected override void Initialize()
         {
+            map = new Map();
             base.Initialize();
         }
 
@@ -45,6 +48,17 @@ namespace Spel
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             CurrentGameState = new MainMenu(this, _graphics.GraphicsDevice, Content);
+            Tiles.Content = Content;
+
+            map.Generate(new int[,]
+            {
+                {0,0,0,0,1 },
+                {0,0,0,1,1 },
+                {0,0,1,1,1 },
+                {0,1,0,1,0 },
+                {1,0,0,1,0 }
+            }, 128);
+            
         }
 
         protected override void Update(GameTime gameTime)
@@ -72,7 +86,7 @@ namespace Spel
 
             // Teken huidige game state
             CurrentGameState.Draw(gameTime, _spriteBatch);
-
+            map.Draw(_spriteBatch);
             // End
             _spriteBatch.End();            
 

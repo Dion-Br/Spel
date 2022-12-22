@@ -39,7 +39,7 @@ namespace Spel.Classes.Level
 		public CollisionTiles(int i, Rectangle newRectangle)
 		{
 			// Hier tile plaatsen
-			texture = Content.Load<Texture2D>("Tile" + i);
+			texture = Content.Load<Texture2D>("Tileset");
 			this.Rectangle = newRectangle;
 		}
 	}

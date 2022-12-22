@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Spel.Classes.Level
 {
-    public class Level
+    public class Map
     {
         private List<CollisionTiles> collisionTiles = new List<CollisionTiles>();
         public List<CollisionTiles> CollisionTiles
@@ -27,7 +27,7 @@ namespace Spel.Classes.Level
             get { return height; }
         }
 
-        public Level() { }
+        public Map() { }
 
         public void Generate(int[,] map, int size)
         {

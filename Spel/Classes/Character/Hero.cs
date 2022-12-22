@@ -7,6 +7,7 @@ using Spel.Interfaces;
 using SharpDX.Direct3D9;
 using System.Text.RegularExpressions;
 using Spel.Classes.Animations;
+using Spel.Classes.Level;
 
 namespace Spel.Classes.Character
 {
@@ -179,7 +180,7 @@ namespace Spel.Classes.Character
                 position.Y += 10;
             }
             // Einde: We hebben onze startpositie bereikt
-            if (position.Y >= startingJumpPos)
+            if (position.Y >= startingJumpPos )
             {
                 i = 1;
                 speed.X = 8f;
