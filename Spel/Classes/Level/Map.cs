@@ -27,8 +27,6 @@ namespace Spel.Classes.Level
             get { return height; }
         }
 
-        public Map() { }
-
         public void Generate(int[,] map, int size)
         {
             for (int x = 0; x < map.GetLength(1); x++)

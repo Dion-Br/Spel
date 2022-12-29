@@ -22,6 +22,7 @@ namespace Spel.Classes.Character
         private Texture2D heroTexture;
         private Vector2 position;
         private Vector2 speed;
+        private Rectangle rectangle;
 
         private int scale, width, height;
         private SpriteEffects se = SpriteEffects.None;
@@ -188,6 +189,39 @@ namespace Spel.Classes.Character
                 reachedTop = false;
                 position.Y = startingJumpPos;
             }
+        }
+
+        public void Collision(Rectangle newRectangle, int xOffset, int yOffset)
+        {
+            rectangle = new Rectangle((int)position.X, (int)position.Y, width, height);
+            if (rectangle.TouchTopOf(newRectangle))
+            {
+                position.Y = newRectangle.Y - height;
+                speed.Y = 0f;
+                hasJumped = false;
+                startingJumpPos = position.Y;
+            }
+
+            if (rectangle.TouchLeftOf(newRectangle))
+            {
+                position.X = newRectangle.X - rectangle.Width - 2;
+            }
+
+            if (rectangle.TouchRightOf(newRectangle))
+            {
+                position.X = newRectangle.X + rectangle.Width + 2;
+            }
+
+            if (rectangle.TouchBottomOf(newRectangle))
+            {
+                speed.Y = 1f;
+                reachedTop = true;
+            }
+
+            /*if (position.X < 0) position.X = 0;
+            if(position.X > xOffset - rectangle.Width) position.X = xOffset - rectangle.Width;
+            if(position.Y < 0) speed.Y = 1f;
+            if(position.Y > yOffset - rectangle.Height) position.Y = yOffset - rectangle.Height;*/
         }
 
         private void MakeAnimations()
