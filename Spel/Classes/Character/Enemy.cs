@@ -5,59 +5,45 @@ using Spel.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Spel.Classes.Character
 {
-    class Enemy : IGameObject
+    abstract class Enemy : IGameObject
     {
-        private SpriteEffects se = SpriteEffects.None;
-        private int width = 32, height = 32, scale = 3;
-        private Texture2D enemyTexture;
-        private Vector2 position, speed;
+        internal Vector2 position, speed;
+        internal SpriteEffects se = SpriteEffects.None;
 
-        Animation runAnimation, attackAnimation, deathAnimation;
-        AnimationManager animationManager;
+        internal Texture2D enemyTexture;
+        internal AnimationManager animationManager;
 
+        private int start, end;
 
-        public Enemy(Texture2D texture)
+        public Enemy(Texture2D texture, int startPos, int endPos, int height)
         {
+            end = endPos;
+            start = startPos;
             enemyTexture = texture;
-            position = new Vector2(500, 500);
             speed = new Vector2(5, 5);
+            position = new Vector2(startPos, (700 - height));
 
             // Animaties ingeven.
             MakeAnimations();
 
             // Huidige animatie intialiseren.
             animationManager = new AnimationManager();
-            SetCurrentAnimation(runAnimation);
         }
 
-        void SetCurrentAnimation(Animation animation)
+        internal void SetCurrentAnimation(Animation animation)
         {
             animationManager.CurrentAnimation = animation;
         }
 
-        private void MakeAnimations()
-        {
-            // Set all the animation for the hero
-            deathAnimation = new Animation();
-            deathAnimation.AddSpriteRow(width, height, 0, 11);
+        internal abstract void MakeAnimations();
 
-            runAnimation = new Animation();
-            runAnimation.AddSpriteRow(width, height, 1, 4);
-
-            attackAnimation = new Animation();
-            attackAnimation.AddSpriteRow(width, height, 2, 7);
-        }
-
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(enemyTexture, position, animationManager.CurrentAnimation.CurrFrame.srcRectangle,
-                Color.White, 0f, new Vector2(0,0), scale, se, 0f);
-        }
+        public abstract void Draw(SpriteBatch spriteBatch);
 
         public void Update(GameTime gameTime)
         {
@@ -67,23 +53,20 @@ namespace Spel.Classes.Character
             animationManager.CurrentAnimation.Update(gameTime);
         }
 
-        public void MoveX()
+        public virtual void MoveX()
         {
             // Variabelen initialiseren
-            int widthBorder = 1400;
-            int rightBorder = widthBorder - width * scale;
-
             position.X += speed.X;
 
-            // Hero mag niet uit de rechterkant van het scherm lopen
-            if (position.X > rightBorder)
+            // Enemey mag niet verder dan eindpositie
+            if (position.X >= end)
             {
                 speed.X *= -1;
                 se = SpriteEffects.FlipHorizontally;
             }
 
-            // Hero mag niet uit de linkerkant van het scherm lopen
-            if (position.X < 0)
+            // Enemy mag niet verder dan startpositie
+            if (position.X <= start)
             {
                 speed.X *= -1;
                 se = SpriteEffects.None;

@@ -18,10 +18,10 @@ namespace Spel.Classes.GameStates
     internal class Playing : GameState
     {
         // Variabelen initialiseren
-        private Texture2D _backgroundTexture, _heroTexture, _enemyTexture;
+        private Texture2D _backgroundTexture, _heroTexture, _dragonTexture, _zombieTexture;
 
         private Hero hero;
-        private Enemy enemy1;
+        private Enemy dragon, zombie;
         private Background background;
         private KeyboardReader KBReader;
         private Map level1, level2, currentLevel; 
@@ -30,13 +30,15 @@ namespace Spel.Classes.GameStates
         {
             KBReader = new KeyboardReader();
 
-            _enemyTexture = _content.Load<Texture2D>("enemy");
+            _dragonTexture = _content.Load<Texture2D>("enemy");
+            _zombieTexture = _content.Load<Texture2D>("zombie");
             _heroTexture = _content.Load<Texture2D>("sprite");
             _backgroundTexture = _content.Load<Texture2D>("background");
 
             Tiles.Content = content;
             hero = new Hero(_heroTexture, KBReader);
-            enemy1 = new Enemy(_enemyTexture);
+            dragon = new dragonEnemy(_dragonTexture, 650, 800, 80);
+            zombie = new zombieEnemy(_zombieTexture, 1000, 1300, 150);
             background = new Background(_backgroundTexture);
 
             GenerateLevels();
@@ -86,7 +88,8 @@ namespace Spel.Classes.GameStates
         public override void Update(GameTime gameTime)
         {
             hero.Update(gameTime);
-            enemy1.Update(gameTime);
+            dragon.Update(gameTime);
+            zombie.Update(gameTime);
             foreach(CollisionTiles tile in currentLevel.CollisionTiles)
             {
                 hero.Collision(tile.Rectangle, currentLevel.Width, currentLevel.Height);
@@ -97,7 +100,8 @@ namespace Spel.Classes.GameStates
         {
             background.Draw(spriteBatch);
             currentLevel.Draw(spriteBatch);
-            enemy1.Draw(spriteBatch);
+            dragon.Draw(spriteBatch);
+            zombie.Draw(spriteBatch);
             hero.Draw(spriteBatch);
         }
 
