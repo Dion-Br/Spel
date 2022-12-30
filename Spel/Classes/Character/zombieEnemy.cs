@@ -12,10 +12,13 @@ namespace Spel.Classes.Character
     class zombieEnemy : Enemy
     {
         private int width = 64, height = 64, scale = 2;
-        Animation runAnimation, attackAnimation, deathAnimation;
+        Animation runAnimation, attackAnimation, deathAnimation;        
 
         public zombieEnemy(Texture2D texture, int startPos, int endPos, int height) : base(texture, startPos, endPos, height)
         {
+            // Zombie trager maken
+            base.speed.X = 2;
+
             // Animaties ingeven.
             MakeAnimations();
 

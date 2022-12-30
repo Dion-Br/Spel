@@ -59,28 +59,13 @@ namespace Spel.Classes.Character
 
         public void Update(GameTime gameTime)
         {
-            // Richting waarheen we gaan
-            var direction = inputReader.ReadInput();
-
-            // Kijken of er beweging is (links of rechts)
-            bool moving = inputReader.ReadMovement();
-
-            // Kijken of hero aanvalt
-            bool attack = inputReader.ReadAttack();
-
-            // Juiste animatie plaatsen adhv van vorige meegegeven variabelen
-            CheckAnimationToSet(moving, attack);
-
-            // Richting krijgt snelheid mee
-            direction *= speed;
-
-            // Positie updaten met de richting
-            position += direction;
+            // Juiste animatie plaatsen adhv van inputReader info
+            CheckAnimationToSet(inputReader.ReadMovement(), inputReader.ReadAttack());            
 
             // Animatie updaten
             animationManager.CurrentAnimation.Update(gameTime);
 
-            // Bewegen naar de posities die zijn berekend
+            // Bewegen 
             Move();
         }
 
@@ -119,10 +104,19 @@ namespace Spel.Classes.Character
 
         private void Move()
         {
-            // Horizontal movement 
+            // Richting waarheen we gaan
+            var direction = inputReader.ReadInput();
+
+            // Richting krijgt snelheid mee
+            direction *= speed;
+
+            // Positie updaten met de richting
+            position += direction;
+
+            // Horizontale beweging 
             MoveX();
 
-            // Vertical movement
+            // Verticale beweging
             Jump();
         }
 
@@ -131,6 +125,7 @@ namespace Spel.Classes.Character
             // Variabelen initialiseren
             int widthBorder = 1400;
             int rightBorder = widthBorder - width * scale;
+            
 
             // Hero mag niet uit de rechterkant van het scherm lopen
             if (position.X > rightBorder)
@@ -157,71 +152,46 @@ namespace Spel.Classes.Character
             int bottomBorder = heightBorder - height * scale;
 
             // Jump instellen 
+            if (speed.Y < 5)
+                speed.Y += 0.4f;
+
             // Begin: Op jump gedrukt
             if (jump && !hasJumped && !reachedTop)
             {
                 hasJumped = true;
+                position.Y -= 5f;
+                speed.Y = -9f;
                 startingJumpPos = position.Y;
-            }
-            // Tweede: Omhoog gaan
-            if (hasJumped && !reachedTop)
-            {
-                i *= 1.8f;
-                position.Y -= Math.Max(30 - i, 7);
-                speed.X = 9;
-            }
-            // Derde: Controleren of we de top hebben geraakt
-            if (hasJumped && position.Y <= startingJumpPos - 150)
-            {
-                reachedTop = true;
-            }
-            // Vierde: Omlaag vallen
-            if (hasJumped && reachedTop)
-            {
-                position.Y += 10;
-            }
-            // Einde: We hebben onze startpositie bereikt
-            if (position.Y >= startingJumpPos )
-            {
-                i = 1;
-                speed.X = 8f;
-                hasJumped = false;
-                reachedTop = false;
-                position.Y = startingJumpPos;
             }
         }
 
         public void Collision(Rectangle newRectangle, int xOffset, int yOffset)
         {
             rectangle = new Rectangle((int)position.X, (int)position.Y, width, height);
+
             if (rectangle.TouchTopOf(newRectangle))
             {
+                reachedTop = false;
+                hasJumped = false;
                 position.Y = newRectangle.Y - height;
                 speed.Y = 0f;
-                hasJumped = false;
-                startingJumpPos = position.Y;
             }
 
             if (rectangle.TouchLeftOf(newRectangle))
             {
-                position.X = newRectangle.X - rectangle.Width - 2;
+                position.X = newRectangle.X - rectangle.Width - 20;
             }
 
             if (rectangle.TouchRightOf(newRectangle))
             {
-                position.X = newRectangle.X + rectangle.Width + 2;
+                position.X = newRectangle.X + rectangle.Width - 30;
             }
 
             if (rectangle.TouchBottomOf(newRectangle))
             {
-                speed.Y = 1f;
                 reachedTop = true;
+                speed.Y += 5f;
             }
-
-            /*if (position.X < 0) position.X = 0;
-            if(position.X > xOffset - rectangle.Width) position.X = xOffset - rectangle.Width;
-            if(position.Y < 0) speed.Y = 1f;
-            if(position.Y > yOffset - rectangle.Height) position.Y = yOffset - rectangle.Height;*/
         }
 
         private void MakeAnimations()

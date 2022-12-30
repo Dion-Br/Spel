@@ -26,7 +26,7 @@ namespace Spel.Classes.Character
             end = endPos;
             start = startPos;
             enemyTexture = texture;
-            speed = new Vector2(5, 5);
+            speed = new Vector2(3, 3);
             position = new Vector2(startPos, (700 - height));
 
             // Animaties ingeven.

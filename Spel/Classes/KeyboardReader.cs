@@ -22,13 +22,13 @@ namespace Spel.Classes
         public Vector2 ReadInput()
         {
             KeyboardState state = Keyboard.GetState();
-            Vector2 direction = Vector2.Zero;
+            Vector2 direction = new Vector2(0,2);
 
             if (state.IsKeyDown(Keys.Left))
             {
                 if (this.ReadMovement())
                 {
-                    direction.X -= speed;
+                    direction.X = -speed;
                     movement.HDirection = HDirection.Left;                
                 }
             }
@@ -36,7 +36,7 @@ namespace Spel.Classes
             {
                 if (this.ReadMovement())
                 {
-                    direction.X += speed;
+                    direction.X = speed;
                     movement.HDirection = HDirection.Right;
                 }
             }
@@ -58,12 +58,12 @@ namespace Spel.Classes
 
         public bool ReadMovement()
         {
-            // Getting keyboard state
+            // Toetsenbord inlezen
             KeyboardState state = Keyboard.GetState();
 
-            // Returning false if both left and right are being pressed at the same time
+            // Als we links en recht ingedrukt hebben is movement false
             if (state.IsKeyDown(Keys.Left) && state.IsKeyDown(Keys.Right)) return false;
-            // Returning true if any movement is being made
+            // True als er beweging is
             if (state.IsKeyDown(Keys.Left) || state.IsKeyDown(Keys.Right)) return true;
 
             return false;
