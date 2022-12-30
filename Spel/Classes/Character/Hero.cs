@@ -147,10 +147,6 @@ namespace Spel.Classes.Character
             // Kijken of we op Jump knop hebben gedrukt
             jump = inputReader.Jump;
 
-            // Variabelen initialiseren
-            int heightBorder = 700;
-            int bottomBorder = heightBorder - height * scale;
-
             // Jump instellen 
             if (speed.Y < 5)
                 speed.Y += 0.4f;

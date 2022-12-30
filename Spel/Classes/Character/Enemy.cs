@@ -29,6 +29,7 @@ namespace Spel.Classes.Character
             start = startPos;
 
             enemyTexture = texture;            
+            rectangle = new Rectangle((int)position.X, (int)position.Y, 64, 64);
 
             speed = new Vector2(3, 3);
             position = new Vector2(startPos, (700 - height));
@@ -52,7 +53,8 @@ namespace Spel.Classes.Character
         public void Update(GameTime gameTime)
         {
             // Rectangle opnemen voor collisions
-            rectangle = new Rectangle((int)position.X, (int)position.Y, enemyTexture.Width, enemyTexture.Height);
+            rectangle.X = (int)position.X;
+            rectangle.Y = (int)position.Y;
 
             MoveX();
 

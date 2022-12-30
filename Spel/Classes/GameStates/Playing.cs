@@ -54,7 +54,10 @@ namespace Spel.Classes.GameStates
             {
                 hero.Collision(tile.Rectangle, currentLevel.map.Width, currentLevel.map.Height);
             }
-            if (hero.rectangle.Intersects(currentLevel.zombie.rectangle) || hero.rectangle.Intersects(currentLevel.dragon.rectangle))
+
+            // Als we een enemy raken zonder attack
+            if (hero.rectangle.Intersects(currentLevel.zombie.rectangle) && !KBReader.ReadAttack() || 
+                hero.rectangle.Intersects(currentLevel.dragon.rectangle) && !KBReader.ReadAttack())
             {
                 _game.ChangeState(new GameOver(_game, _graphicsDevice, _content));
             }

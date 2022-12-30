@@ -16,9 +16,9 @@ namespace Spel.Classes.GameStates
     {
         new Game1 _game;
 
-        private Texture2D _backgroundTexture, _btnStartTexture, _btnCloseTexture;
+        private Texture2D _backgroundTexture, _btnMenuTexture, _btnRetartTexture, _btnCloseTexture;
+        private cButton btnMenu, btnRestart, btnClose;
         private Background background;
-        private cButton btnStart, btnClose;
 
         public GameOver(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
@@ -27,34 +27,41 @@ namespace Spel.Classes.GameStates
 
             // Textures inladen
             _backgroundTexture = _content.Load<Texture2D>("gameover");
-            _btnStartTexture = _content.Load<Texture2D>("play");
+            _btnMenuTexture = _content.Load<Texture2D>("menu");
+            _btnRetartTexture = _content.Load<Texture2D>("restart");
             _btnCloseTexture = _content.Load<Texture2D>("quit");
 
 
             // Initialiseren
             background = new Background(_backgroundTexture);
-            btnStart = new cButton(_btnStartTexture, 610, 400);
-            btnClose = new cButton(_btnCloseTexture, 610, 480);
+            btnMenu = new cButton(_btnMenuTexture, 610, 400);
+            btnRestart = new cButton(_btnRetartTexture, 610, 480);
+            btnClose = new cButton(_btnCloseTexture, 610, 560);
 
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             background.Draw(spriteBatch);
-            btnStart.Draw(spriteBatch, _graphicsDevice);
+
+            btnMenu.Draw(spriteBatch, _graphicsDevice);
+            btnRestart.Draw(spriteBatch, _graphicsDevice);
             btnClose.Draw(spriteBatch, _graphicsDevice);
         }
 
         public override void Update(GameTime gameTime)
         {
             // Knoppen updaten
-            btnStart.Update();
+            btnMenu.Update();
+            btnRestart.Update();
             btnClose.Update();
 
             // Actie voor als er op een menu knop is gedrukt
-            if (btnStart.Clicked)
-                _game.ChangeState(new Playing(_game, _graphicsDevice, _content));
+            if (btnMenu.Clicked)
+                _game.ChangeState(new MainMenu(_game, _graphicsDevice, _content));
 
+            if(btnRestart.Clicked)
+                _game.ChangeState(new Playing(_game, _graphicsDevice, _content));
 
             if (btnClose.Clicked)
                 Application.Exit();
