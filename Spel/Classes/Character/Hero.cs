@@ -17,13 +17,13 @@ namespace Spel.Classes.Character
         // Variabelen initialiseren
         public KeyboardReader inputReader { get; set; }
         public bool jump { get; set; } = false;
+
         bool hasJumped, reachedTop;
+        public Rectangle rectangle;
 
         private Texture2D heroTexture;
         private Vector2 position;
         private Vector2 speed;
-        private Rectangle rectangle;
-
         private int scale, width, height;
         private SpriteEffects se = SpriteEffects.None;
 
@@ -140,7 +140,7 @@ namespace Spel.Classes.Character
         }
 
 
-        float i = 1, startingJumpPos = 600;
+        float startingJumpPos = 600;
 
         private void Jump()
         {

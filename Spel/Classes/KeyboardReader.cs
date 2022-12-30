@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using SharpDX.MediaFoundation;
+using Spel.Classes.Character;
 using Spel.Interfaces;
 using System;
 using System.Collections.Generic;

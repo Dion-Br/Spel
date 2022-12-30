@@ -16,6 +16,9 @@ namespace Spel.Classes.Character
 
         public zombieEnemy(Texture2D texture, int startPos, int endPos, int height) : base(texture, startPos, endPos, height)
         {
+            // Rectangle opnemen voor collisions
+            rectangle = new Rectangle((int)position.X, (int)position.Y, enemyTexture.Width, enemyTexture.Height);
+
             // Zombie trager maken
             base.speed.X = 2;
 

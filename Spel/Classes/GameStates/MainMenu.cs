@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Spel.Classes.LevelDesign;
 using Spel.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,16 +11,16 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify;
 
 namespace Spel.Classes.GameStates
 {
     internal class MainMenu : GameState
     {
+        new Game1 _game;
+
         private Texture2D _backgroundTexture, _btnStartTexture, _btnCloseTexture;
         private Background background;
         private cButton btnStart, btnClose;
-        new Game1 _game;
 
         public MainMenu(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {

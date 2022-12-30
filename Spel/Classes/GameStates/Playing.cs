@@ -12,6 +12,7 @@ using System.Reflection.Metadata;
 using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify;
 
 namespace Spel.Classes.GameStates
@@ -19,6 +20,8 @@ namespace Spel.Classes.GameStates
     internal class Playing : GameState
     {
         // Variabelen initialiseren
+        new Game1 _game;
+
         private Texture2D _heroTexture;
 
         private Hero hero;
@@ -27,6 +30,9 @@ namespace Spel.Classes.GameStates
 
         public Playing(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
+            // Game inladen
+            _game = game;
+
             KBReader = new KeyboardReader();
 
             _heroTexture = _content.Load<Texture2D>("sprite");
@@ -47,6 +53,10 @@ namespace Spel.Classes.GameStates
             foreach(CollisionTiles tile in currentLevel.map.CollisionTiles)
             {
                 hero.Collision(tile.Rectangle, currentLevel.map.Width, currentLevel.map.Height);
+            }
+            if (hero.rectangle.Intersects(currentLevel.zombie.rectangle) || hero.rectangle.Intersects(currentLevel.dragon.rectangle))
+            {
+                _game.ChangeState(new GameOver(_game, _graphicsDevice, _content));
             }
         }
 

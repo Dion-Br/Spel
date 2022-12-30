@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Spel.Classes
+namespace Spel.Classes.Character
 {
     public enum VDirection
     {

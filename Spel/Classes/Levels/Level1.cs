@@ -3,12 +3,12 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Spel.Classes.Character;
 using Spel.Classes.Level;
+using Spel.Classes.LevelDesign;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify;
 
 namespace Spel.Classes.Levels
 {
@@ -18,7 +18,7 @@ namespace Spel.Classes.Levels
         public Level1(GraphicsDevice graphicsDevice, ContentManager content) : base(graphicsDevice, content)
         {
             // Elementen die nodig zijn in het level inladen
-            dragon = new dragonEnemy(_dragonTexture, 670, 800, 80);
+            dragon = new dragonEnemy(_dragonTexture, 200, 1000, 80);
             zombie = new zombieEnemy(_zombieTexture, 1050, 1300, 100);
             background = new Background(_backgroundTexture);
         }

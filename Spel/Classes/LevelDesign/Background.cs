@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Spel.Classes
+namespace Spel.Classes.LevelDesign
 {
     class Background : IGameObject
     {
@@ -16,7 +16,8 @@ namespace Spel.Classes
 
         public Vector2 WindowSize { get; private set; } = new Vector2(1400, 787);
 
-        public Background(Texture2D texture) {
+        public Background(Texture2D texture)
+        {
             // Set the background texture that was given 
             bgTexture = texture;
         }
@@ -28,7 +29,7 @@ namespace Spel.Classes
         public void Draw(SpriteBatch spriteBatch)
         {
             // Draw the background on the given spriteBatch
-            spriteBatch.Draw(bgTexture, new Vector2(0,0),
+            spriteBatch.Draw(bgTexture, new Vector2(0, 0),
                  Color.White);
         }
     }
