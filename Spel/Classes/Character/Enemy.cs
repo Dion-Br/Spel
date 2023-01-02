@@ -44,11 +44,6 @@ namespace Spel.Classes.Character
             animationManager = new AnimationManager();
         }
 
-        internal void SetCurrentAnimation(Animation animation)
-        {
-            animationManager.CurrentAnimation = animation;
-        }
-
         internal abstract void MakeAnimations();
 
         public abstract void Draw(SpriteBatch spriteBatch);

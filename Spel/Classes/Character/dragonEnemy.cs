@@ -22,7 +22,7 @@ namespace Spel.Classes.Character
 
             // Huidige animatie intialiseren.
             animationManager = new AnimationManager();
-            base.SetCurrentAnimation(runAnimation);
+            animationManager.CurrentAnimation = runAnimation;
         }
 
         internal override void MakeAnimations()

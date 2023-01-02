@@ -15,13 +15,11 @@ namespace Spel.Classes.Levels
 {
     class Level2 : Level
     {
-        public Map map;
-
         public Level2(GraphicsDevice graphicsDevice, ContentManager content) : base(graphicsDevice, content)
         {
             // Elementen die nodig zijn in het level inladen
-            dragon = new dragonEnemy(_dragonTexture, 670, 800, 80);
-            zombie = new zombieEnemy(_zombieTexture, 1050, 1300, 100);
+            enemies.Add(new dragonEnemy(_dragonTexture, 670, 800, 80));
+            enemies.Add(new zombieEnemy(_zombieTexture, 1050, 1300, 100));
             background = new Background(_backgroundTexture);
         }
 
@@ -51,18 +49,5 @@ namespace Spel.Classes.Levels
             }, 64);
         }
 
-        public override void Update(GameTime gameTime)
-        {
-            dragon.Update(gameTime);
-            zombie.Update(gameTime);
-        }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            background.Draw(spriteBatch);
-            map.Draw(spriteBatch);
-            dragon.Draw(spriteBatch);
-            zombie.Draw(spriteBatch);
-        }
     }
 }

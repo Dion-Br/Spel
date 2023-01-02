@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SharpDX.X3DAudio;
@@ -8,24 +9,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Spel.Classes
+namespace Spel.Classes.Button
 {
-    internal class cButton
+    abstract class cButton
     {
-        public Texture2D texture { get; set; }
+        internal Texture2D _texture;
 
         // Constructor 
-        public cButton(Texture2D texture, int X, int Y)
+        public cButton(ContentManager content, int X, int Y)
         {
-            this.texture = texture;
             setPos(X, Y);
 
             rectangle = new Rectangle(x, y, width, height);
         }
 
         // Grootte van de knop
-        private int width { get; set; } = 175;
-        private int height { get; set; } = 60;
+        internal int width { get; set; } = 175;
+        internal int height { get; set; } = 60;
 
         public void setSize(int width, int height)
         {
@@ -34,13 +34,13 @@ namespace Spel.Classes
         }
 
         // Positie van de knop
-        private int x { get; set; }
-        private int y { get; set; }
+        internal int x { get; set; }
+        internal int y { get; set; }
 
         public void setPos(int X, int Y)
         {
-            this.x = X; 
-            this.y = Y;
+            x = X;
+            y = Y;
         }
 
         // Kleur property
@@ -48,12 +48,6 @@ namespace Spel.Classes
 
         // Rechthoek over knop
         public Rectangle rectangle { get; private set; }
-        
-        // Teken functie
-        public void Draw (SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
-        {
-            spriteBatch.Draw(texture, rectangle, color);
-        }
 
         // Bool of er geklikt is op knop
         public bool Clicked { get; private set; }
@@ -65,9 +59,9 @@ namespace Spel.Classes
             var mouseState = Mouse.GetState();
             var mousePosition = new Point(mouseState.X, mouseState.Y);
 
-            if (this.rectangle.Contains(mousePosition))
+            if (rectangle.Contains(mousePosition))
             {
-                this.color = Color.Gray;
+                color = Color.Gray;
 
                 // Als er geklikt word op knop
                 if (mouseState.LeftButton == ButtonState.Pressed)
@@ -77,8 +71,14 @@ namespace Spel.Classes
             }
             else
             {
-                this.color = Color.White;
+                color = Color.White;
             }
+        }
+
+        // Teken functie
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(_texture, rectangle, color);
         }
     }
 }

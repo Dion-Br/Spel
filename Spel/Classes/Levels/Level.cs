@@ -18,7 +18,6 @@ namespace Spel.Classes.Levels
 
         internal Background background;
         internal Texture2D _backgroundTexture, _dragonTexture, _zombieTexture;
-        internal Enemy dragon, zombie;
         internal List<Enemy> enemies;
         internal ContentManager _content;
         internal GraphicsDevice _graphicsDevice;
@@ -41,8 +40,18 @@ namespace Spel.Classes.Levels
 
         public abstract void GenerateLevel();
 
-        public abstract void Update(GameTime gameTime);
+        public void Update(GameTime gameTime)
+        {
+            foreach (var enemy in enemies)
+                enemy.Update(gameTime);
+        }
 
-        public abstract void Draw(SpriteBatch spriteBatch);
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            background.Draw(spriteBatch);
+            map.Draw(spriteBatch);
+            foreach (var enemy in enemies)
+                enemy.Draw(spriteBatch);
+        }
     }
 }

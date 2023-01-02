@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Spel.Classes.Button;
 using Spel.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -18,13 +19,15 @@ namespace Spel.Classes.GameStates
         protected GraphicsDevice _graphicsDevice;
         protected ContentManager _content;
 
+        internal List<cButton> buttons;
+
         public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content)
         {
             _game = game;
-
             _graphicsDevice = graphicsDevice;
-
             _content = content;
+
+            buttons = new List<cButton>();
         }
 
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);

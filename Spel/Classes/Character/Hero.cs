@@ -15,7 +15,6 @@ namespace Spel.Classes.Character
     class Hero : IGameObject
     {
         // Variabelen initialiseren
-
         bool hasJumped, reachedTop;
         public Rectangle rectangle;
 
