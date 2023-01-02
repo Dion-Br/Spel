@@ -15,8 +15,6 @@ namespace Spel.Classes.Character
     class Hero : IGameObject
     {
         // Variabelen initialiseren
-        public KeyboardReader inputReader { get; set; }
-        public bool jump { get; set; } = false;
 
         bool hasJumped, reachedTop;
         public Rectangle rectangle;
@@ -30,6 +28,9 @@ namespace Spel.Classes.Character
         Animation runAnimation, attackAnimation, staticAnimation, jumpAnimation, deathAnimation;
         AnimationManager animationManager;
 
+        public int score { get; set; }
+        public bool jump { get; set; }
+        public KeyboardReader inputReader { get; set; }
 
         public Hero(Texture2D texture, IInputReader inputReader)
         {
@@ -139,16 +140,13 @@ namespace Spel.Classes.Character
             }
         }
 
-
-        float startingJumpPos = 600;
-
         private void Jump()
         {
             // Kijken of we op Jump knop hebben gedrukt
             jump = inputReader.Jump;
 
             // Jump instellen 
-            if (speed.Y < 5)
+            if (speed.Y < 13)
                 speed.Y += 0.4f;
 
             // Begin: Op jump gedrukt
@@ -157,7 +155,6 @@ namespace Spel.Classes.Character
                 hasJumped = true;
                 position.Y -= 5f;
                 speed.Y = -9f;
-                startingJumpPos = position.Y;
             }
         }
 
@@ -186,7 +183,7 @@ namespace Spel.Classes.Character
             if (rectangle.TouchBottomOf(newRectangle))
             {
                 reachedTop = true;
-                speed.Y += 5f;
+                speed.Y += 4f;
             }
         }
 
@@ -207,6 +204,15 @@ namespace Spel.Classes.Character
 
             deathAnimation = new Animation();
             deathAnimation.AddSpriteRow(width, height, 4, 3);
+        }
+    
+        public void KilledEnemy(bool onTop)
+        {
+            if (onTop)
+            {
+                speed.Y = -5;
+            }
+            score++;
         }
     }
 }

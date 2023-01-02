@@ -19,6 +19,7 @@ namespace Spel.Classes.Levels
         internal Background background;
         internal Texture2D _backgroundTexture, _dragonTexture, _zombieTexture;
         internal Enemy dragon, zombie;
+        internal List<Enemy> enemies;
         internal ContentManager _content;
         internal GraphicsDevice _graphicsDevice;
 
@@ -29,6 +30,7 @@ namespace Spel.Classes.Levels
             _graphicsDevice = graphicsDevice;
 
             // Textures inladen
+            enemies = new List<Enemy>();
             _dragonTexture = _content.Load<Texture2D>("enemy");
             _zombieTexture = _content.Load<Texture2D>("zombie");
             _backgroundTexture = _content.Load<Texture2D>("background");

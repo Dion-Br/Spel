@@ -14,6 +14,7 @@ namespace Spel.Classes.Character
     abstract class Enemy : IGameObject
     {
         public Rectangle rectangle;
+        public bool isAlive { get; private set; }
 
         internal Vector2 position, speed;
         internal SpriteEffects se = SpriteEffects.None;
@@ -27,6 +28,8 @@ namespace Spel.Classes.Character
         {
             end = endPos;
             start = startPos;
+
+            isAlive = true;
 
             enemyTexture = texture;            
             rectangle = new Rectangle((int)position.X, (int)position.Y, 64, 64);
@@ -52,14 +55,17 @@ namespace Spel.Classes.Character
 
         public void Update(GameTime gameTime)
         {
-            // Rectangle opnemen voor collisions
-            rectangle.X = (int)position.X;
-            rectangle.Y = (int)position.Y;
+            if (isAlive)
+            {
+                // Rectangle opnemen voor collisions
+                rectangle.X = (int)position.X;
+                rectangle.Y = (int)position.Y;
 
-            MoveX();
+                MoveX();
 
-            // Animatie updaten
-            animationManager.CurrentAnimation.Update(gameTime);
+                // Animatie updaten
+                animationManager.CurrentAnimation.Update(gameTime);
+            }
         }
 
         public virtual void MoveX()
@@ -80,6 +86,15 @@ namespace Spel.Classes.Character
                 speed.X *= -1;
                 se = SpriteEffects.None;
             }
+        }
+
+        public void Die()
+        {
+            //Dood animatie..
+
+            // Enemy sterft en is niet meer aanraakbaar
+            isAlive = false;
+            rectangle.Y = -500;
         }
     }
 }

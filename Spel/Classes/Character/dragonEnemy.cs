@@ -40,8 +40,11 @@ namespace Spel.Classes.Character
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(enemyTexture, position, animationManager.CurrentAnimation.CurrFrame.srcRectangle,
+            if (isAlive)
+            {
+                spriteBatch.Draw(enemyTexture, position, animationManager.CurrentAnimation.CurrFrame.srcRectangle,
                 Color.White, 0f, new Vector2(0, 0), scale, se, 0f);
+            }
         }
     }
 }

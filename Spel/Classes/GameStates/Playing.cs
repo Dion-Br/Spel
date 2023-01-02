@@ -55,12 +55,30 @@ namespace Spel.Classes.GameStates
                 hero.Collision(tile.Rectangle, currentLevel.map.Width, currentLevel.map.Height);
             }
 
-            // Als we een enemy raken zonder attack
-            if (hero.rectangle.Intersects(currentLevel.zombie.rectangle) && !KBReader.ReadAttack() || 
-                hero.rectangle.Intersects(currentLevel.dragon.rectangle) && !KBReader.ReadAttack())
+            foreach(var enemy in currentLevel.enemies)
             {
-                _game.ChangeState(new GameOver(_game, _graphicsDevice, _content));
+                // Hero zal de vijand doden door er langs bovenop te springen.
+                if (hero.rectangle.TouchTopOf(enemy.rectangle))
+                {
+                    enemy.Die();
+                    hero.KilledEnemy(true);
+                }
+
+                // Als we een enemy de hero raakt -> hero sterft
+                if (hero.rectangle.Intersects(enemy.rectangle))
+                {
+                    if (!KBReader.ReadAttack())
+                    {
+                        _game.ChangeState(new GameOver(_game, _graphicsDevice, _content));
+                    }
+                    else
+                    {
+                        enemy.Die();
+                        hero.KilledEnemy(false);
+                    }
+                }
             }
+
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
