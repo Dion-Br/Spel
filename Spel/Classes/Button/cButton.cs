@@ -13,13 +13,21 @@ namespace Spel.Classes.Button
 {
     abstract class cButton
     {
+        protected Game1 _game;
+        protected GraphicsDevice _graphicsDevice;
+        protected ContentManager _content;
+
         internal Texture2D _texture;
 
         // Constructor 
-        public cButton(ContentManager content, int X, int Y)
+        public cButton(Game1 game, GraphicsDevice graphicsDevice, ContentManager content, int X, int Y)
         {
-            setPos(X, Y);
+            _game = game;
+            _graphicsDevice = graphicsDevice;
+            _content = content;
 
+
+            setPos(X, Y);
             rectangle = new Rectangle(x, y, width, height);
         }
 
@@ -73,7 +81,14 @@ namespace Spel.Classes.Button
             {
                 color = Color.White;
             }
+
+            if (Clicked)
+            {
+                DoBtnFunction();
+            }
         }
+
+        internal abstract void DoBtnFunction();
 
         // Teken functie
         public void Draw(SpriteBatch spriteBatch)

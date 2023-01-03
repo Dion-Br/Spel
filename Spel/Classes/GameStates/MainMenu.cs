@@ -38,12 +38,13 @@ namespace Spel.Classes.GameStates
             background = new Background(_backgroundTexture);
 
             // Knoppen toevoegen
-            buttons.Add(new StartButton(content, 610, 400));
-            buttons.Add(new CloseButton(content, 610, 480));
+            buttons.Add(new StartButton(game, graphicsDevice, content, 610, 400));
+            buttons.Add(new CloseButton(game, graphicsDevice, content, 610, 480));
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            // Alle elementen tekenen
             background.Draw(spriteBatch);
 
             foreach(var button in buttons)
@@ -59,15 +60,6 @@ namespace Spel.Classes.GameStates
             {
                 button.Update();
             }
-
-
-            // Actie voor als er op een menu knop is gedrukt
-            if (buttons[0].Clicked)
-                _game.ChangeState(new Playing(_game, _graphicsDevice, _content));
-
-
-            if (buttons[1].Clicked)
-                Application.Exit();
         }
     }
 }
