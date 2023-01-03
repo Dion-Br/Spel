@@ -29,7 +29,8 @@ namespace Spel.Classes.Levels
         {
             // Initialisatie
             _content = content;
-            _graphicsDevice = graphicsDevice;
+           _graphicsDevice = graphicsDevice;
+
             enemies = new List<Enemy>();
             stars = new List<Star>();
 
@@ -43,8 +44,6 @@ namespace Spel.Classes.Levels
         }
 
         public abstract void GenerateLevel();
-        public abstract void LevelComplete();
-        
 
         public void Update(GameTime gameTime)
         {

@@ -22,12 +22,13 @@ namespace Spel.Classes.GameStates
     {
         // Variabelen initialiseren
         new Game1 _game;
+        private static int counter = 0;
 
         private Texture2D _heroTexture;
 
         private Hero hero;
         private KeyboardReader KBReader;
-        private Levels.Level level1, level2, currentLevel;
+        internal Levels.Level level1, level2, currentLevel;
 
         public Playing(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
@@ -73,6 +74,7 @@ namespace Spel.Classes.GameStates
                         // Hero sterft 
                         Hero.score = 0;
                         _game.ChangeState(new GameOver(_game, _graphicsDevice, _content));
+                        counter = 0;
                     }
                     else
                     {
@@ -84,8 +86,17 @@ namespace Spel.Classes.GameStates
                 // Als we het level hebben gehaald
                 if(Hero.score == currentLevel.MaxScore)
                 {
+                    counter++;
                     Hero.score = 0;
-                    _game.ChangeState(new Playing(_game, _graphicsDevice, _content) { currentLevel = level2 });
+                    if (counter > 1)
+                    {
+                        _game.ChangeState(new WinnerState(_game, _graphicsDevice, _content));
+                        counter = 0;
+                    }
+                    else
+                    {
+                        _game.ChangeState(new Playing(_game, _graphicsDevice, _content) { currentLevel = level2 });
+                    }
                 }
             }
 

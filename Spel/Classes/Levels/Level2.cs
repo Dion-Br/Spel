@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Spel.Classes.Collectable;
+using Spel.Classes.GameStates;
 
 namespace Spel.Classes.Levels
 {
@@ -54,6 +55,5 @@ namespace Spel.Classes.Levels
                 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
             }, 64);
         }
-
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Spel.Classes.Character;
 using Spel.Classes.Collectable;
+using Spel.Classes.GameStates;
 using Spel.Classes.Level;
 using Spel.Classes.LevelDesign;
 using System;
