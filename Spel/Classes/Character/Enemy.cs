@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SharpDX.Direct2D1.Effects;
 using Spel.Classes.Animations;
 using Spel.Interfaces;
 using System;
@@ -23,6 +24,7 @@ namespace Spel.Classes.Character
         internal AnimationManager animationManager;
 
         private int start, end;
+        internal int width, height, scale;
 
         public Enemy(Texture2D texture, int startPos, int endPos, int height)
         {
@@ -46,7 +48,14 @@ namespace Spel.Classes.Character
 
         internal abstract void MakeAnimations();
 
-        public abstract void Draw(SpriteBatch spriteBatch);
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            if (isAlive)
+            {
+                spriteBatch.Draw(enemyTexture, position, animationManager.CurrentAnimation.CurrFrame.srcRectangle,
+                Color.White, 0f, new Vector2(0, 0), scale, se, 0f);
+            }
+        }
 
         public void Update(GameTime gameTime)
         {
@@ -87,9 +96,14 @@ namespace Spel.Classes.Character
         {
             //Dood animatie..
 
-            // Enemy sterft en is niet meer aanraakbaar
+            // Enemy sterft
             isAlive = false;
+
+            // Uit scherm
             rectangle.Y = -500;
+
+            // Hero score gaat omhoog
+            Hero.score += 1;
         }
     }
 }

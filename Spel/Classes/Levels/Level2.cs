@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Spel.Classes.Collectable;
 
 namespace Spel.Classes.Levels
 {
@@ -18,9 +19,14 @@ namespace Spel.Classes.Levels
         public Level2(GraphicsDevice graphicsDevice, ContentManager content) : base(graphicsDevice, content)
         {
             // Elementen die nodig zijn in het level inladen
+            stars.Add(new Star(content, 800, 650));
+            stars.Add(new Star(content, 1000, 500));
+
             enemies.Add(new dragonEnemy(_dragonTexture, 670, 800, 80));
             enemies.Add(new zombieEnemy(_zombieTexture, 1050, 1300, 100));
             background = new Background(_backgroundTexture);
+
+            MaxScore = 4;
         }
 
         public override void GenerateLevel()

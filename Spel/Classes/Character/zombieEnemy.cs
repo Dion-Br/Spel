@@ -11,7 +11,6 @@ namespace Spel.Classes.Character
 {
     class zombieEnemy : Enemy
     {
-        private int width = 64, height = 64, scale = 2;
         Animation runAnimation, attackAnimation, deathAnimation;        
 
         public zombieEnemy(Texture2D texture, int startPos, int endPos, int height) : base(texture, startPos, endPos, height)
@@ -19,21 +18,16 @@ namespace Spel.Classes.Character
             // Zombie trager maken
             base.speed.X = 2;
 
+            base.width = 64;
+            base.height = 64;
+            base.scale = 2;
+
             // Animaties ingeven.
             MakeAnimations();
 
             // Huidige animatie intialiseren.
             animationManager = new AnimationManager();
             animationManager.CurrentAnimation = runAnimation;
-        }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            if (isAlive)
-            {
-                spriteBatch.Draw(enemyTexture, position, animationManager.CurrentAnimation.CurrFrame.srcRectangle,
-                Color.White, 0f, new Vector2(0, 0), scale, se, 0f);
-            }
         }
 
         internal override void MakeAnimations()

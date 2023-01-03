@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SharpDX.Direct2D1.Effects;
 using SharpDX.Direct3D9;
 using Spel.Classes.Animations;
 using System;
@@ -12,11 +13,15 @@ namespace Spel.Classes.Character
 {
     class dragonEnemy : Enemy
     {
-        private int width = 32, height = 32, scale = 4;
         Animation runAnimation, attackAnimation, deathAnimation;
 
         public dragonEnemy(Texture2D texture, int startPos, int endPos, int height) : base(texture, startPos, endPos, height)
         {
+            // Default waardes ingeven
+            base.width = 32;
+            base.height = 32;
+            base.scale = 4;
+
             // Animaties ingeven.
             MakeAnimations();
 
@@ -36,15 +41,6 @@ namespace Spel.Classes.Character
 
             attackAnimation = new Animation();
             attackAnimation.AddSpriteRow(width, height, 2, 7);
-        }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            if (isAlive)
-            {
-                spriteBatch.Draw(enemyTexture, position, animationManager.CurrentAnimation.CurrFrame.srcRectangle,
-                Color.White, 0f, new Vector2(0, 0), scale, se, 0f);
-            }
         }
     }
 }

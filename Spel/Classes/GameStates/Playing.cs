@@ -11,6 +11,7 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Reflection.PortableExecutable;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify;
@@ -32,10 +33,10 @@ namespace Spel.Classes.GameStates
         {
             // Game inladen
             _game = game;
+            _heroTexture = _content.Load<Texture2D>("sprite");
+
 
             KBReader = new KeyboardReader();
-
-            _heroTexture = _content.Load<Texture2D>("sprite");
             hero = new Hero(_heroTexture, KBReader);
 
             Tiles.Content = _content;
@@ -69,6 +70,8 @@ namespace Spel.Classes.GameStates
                 {
                     if (!KBReader.ReadAttack())
                     {
+                        // Hero sterft 
+                        Hero.score = 0;
                         _game.ChangeState(new GameOver(_game, _graphicsDevice, _content));
                     }
                     else
@@ -76,6 +79,21 @@ namespace Spel.Classes.GameStates
                         enemy.Die();
                         hero.KilledEnemy(false);
                     }
+                }
+
+                // Als we het level hebben gehaald
+                if(Hero.score == currentLevel.MaxScore)
+                {
+                    Hero.score = 0;
+                    _game.ChangeState(new Playing(_game, _graphicsDevice, _content) { currentLevel = level2 });
+                }
+            }
+
+            foreach(var star in currentLevel.stars)
+            {
+                if (hero.rectangle.Intersects(star.rectangle))
+                {
+                    star.Collected();
                 }
             }
 

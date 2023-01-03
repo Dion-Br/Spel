@@ -8,15 +8,14 @@ using System.Threading.Tasks;
 namespace Spel.Classes.Level
 {
     // Bron: https://www.youtube.com/watch?v=PKlHcxFAEk0
-
     public static class RectangleHelper
     {
         public static bool TouchTopOf(this Rectangle r1, Rectangle r2)
         {
             return (r1.Bottom >= r2.Top - 1 &&
-                r1.Bottom <= r2.Top + (r2.Height / 2) &&
+                r1.Bottom <= r2.Top + (r2.Height / 4) &&
                 r1.Right >= r2.Left + (r2.Width / 5) &&
-                r1.Left <= r2.Right - (r2.Width / 5));
+                r1.Left <= r2.Right - (r2.Width / 2));
         }
 
         public static bool TouchBottomOf(this Rectangle r1, Rectangle r2)

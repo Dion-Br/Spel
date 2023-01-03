@@ -8,6 +8,7 @@ using SharpDX.Direct3D9;
 using System.Text.RegularExpressions;
 using Spel.Classes.Animations;
 using Spel.Classes.Level;
+using Microsoft.VisualBasic.Logging;
 
 namespace Spel.Classes.Character
 {
@@ -27,7 +28,7 @@ namespace Spel.Classes.Character
         Animation runAnimation, attackAnimation, staticAnimation, jumpAnimation, deathAnimation;
         AnimationManager animationManager;
 
-        public int score { get; set; }
+        public static int score { get; set; }
         public bool jump { get; set; }
         public KeyboardReader inputReader { get; set; }
 
@@ -211,7 +212,6 @@ namespace Spel.Classes.Character
             {
                 speed.Y = -5;
             }
-            score++;
         }
     }
 }
