@@ -26,7 +26,7 @@ namespace Spel.Classes.GameStates
         public MainMenu(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
             // Sleep zodat er niet tweemaal op een knop word gedrukt na game over
-            Thread.Sleep(100);
+            Thread.Sleep(200);
 
             // Game inladen
             _game = game;

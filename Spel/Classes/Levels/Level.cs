@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Spel.Classes.Levels
@@ -17,10 +18,12 @@ namespace Spel.Classes.Levels
     {
         public Map map;
         public List<Star> stars;
-        public int MaxScore;
+        public int MaxScore {
+            get { return enemies.Count + stars.Count; }
+        }
 
         internal Background background;
-        internal Texture2D _backgroundTexture, _dragonTexture, _zombieTexture;
+        internal Texture2D _backgroundTexture, _dragonTexture, _zombieTexture, _trapTexture;
         internal List<Enemy> enemies;
         internal ContentManager _content;
         internal GraphicsDevice _graphicsDevice;
@@ -37,6 +40,7 @@ namespace Spel.Classes.Levels
             // Textures inladen
             _dragonTexture = _content.Load<Texture2D>("enemy");
             _zombieTexture = _content.Load<Texture2D>("zombie");
+            _trapTexture = _content.Load<Texture2D>("skull");
             _backgroundTexture = _content.Load<Texture2D>("background");            
 
             // Level genereren

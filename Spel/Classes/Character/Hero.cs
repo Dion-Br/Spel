@@ -39,7 +39,7 @@ namespace Spel.Classes.Character
 
             speed = new Vector2(8, 5);
             position = new Vector2(50, 400);
-            scale = 2;
+            scale = 1;
             width = 64;
             height = 64;
             hasJumped = true;
@@ -153,8 +153,8 @@ namespace Spel.Classes.Character
             if (jump && !hasJumped && !reachedTop)
             {
                 hasJumped = true;
-                position.Y -= 5f;
-                speed.Y = -9f;
+                position.Y -= 3f;
+                speed.Y = -6f;
             }
         }
 
@@ -172,12 +172,12 @@ namespace Spel.Classes.Character
 
             if (rectangle.TouchLeftOf(newRectangle))
             {
-                position.X = newRectangle.X - rectangle.Width - 20;
+                position.X = newRectangle.X - rectangle.Width + 20;
             }
 
             if (rectangle.TouchRightOf(newRectangle))
             {
-                position.X = newRectangle.X + rectangle.Width - 30;
+                position.X = newRectangle.X + rectangle.Width - 40 ;
             }
 
             if (rectangle.TouchBottomOf(newRectangle))

@@ -73,8 +73,9 @@ namespace Spel.Classes.GameStates
                     {
                         // Hero sterft 
                         Hero.score = 0;
-                        _game.ChangeState(new GameOver(_game, _graphicsDevice, _content));
                         counter = 0;
+                        _game.ChangeState(new GameOver(_game, _graphicsDevice, _content));
+                        Thread.Sleep(400);
                     }
                     else
                     {
@@ -97,6 +98,8 @@ namespace Spel.Classes.GameStates
                     {
                         _game.ChangeState(new Playing(_game, _graphicsDevice, _content) { currentLevel = level2 });
                     }
+
+                    Thread.Sleep(400);
                 }
             }
 

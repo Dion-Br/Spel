@@ -17,7 +17,6 @@ namespace Spel.Classes.Character
         {
             // Zombie trager maken
             base.speed.X = 2;
-
             base.width = 64;
             base.height = 64;
             base.scale = 2;
@@ -26,7 +25,6 @@ namespace Spel.Classes.Character
             MakeAnimations();
 
             // Huidige animatie intialiseren.
-            animationManager = new AnimationManager();
             animationManager.CurrentAnimation = runAnimation;
         }
 

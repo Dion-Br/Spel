@@ -34,13 +34,9 @@ namespace Spel.Classes.Character
             isAlive = true;
 
             enemyTexture = texture;            
-            rectangle = new Rectangle((int)position.X, (int)position.Y, 64, 64);
 
             speed = new Vector2(3, 3);
             position = new Vector2(startPos, (700 - height));
-
-            // Animaties ingeven.
-            MakeAnimations();
 
             // Huidige animatie intialiseren.
             animationManager = new AnimationManager();
@@ -61,12 +57,10 @@ namespace Spel.Classes.Character
         {
             if (isAlive)
             {
-                // Rectangle opnemen voor collisions
-                rectangle.X = (int)position.X;
-                rectangle.Y = (int)position.Y;
-
                 MoveX();
 
+                // Rectangle opnemen voor collisions
+                rectangle = new Rectangle((int)position.X + 50, (int)position.Y+height, 32 - 10, 32);
                 // Animatie updaten
                 animationManager.CurrentAnimation.Update(gameTime);
             }
