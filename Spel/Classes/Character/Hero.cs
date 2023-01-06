@@ -1,19 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Spel.Interfaces;
-using SharpDX.Direct3D9;
-using System.Text.RegularExpressions;
 using Spel.Classes.Animations;
 using Spel.Classes.Level;
-using Microsoft.VisualBasic.Logging;
+using IDrawable = Spel.Interfaces.IDrawable;
+using IUpdateable = Spel.Interfaces.IUpdateable;
 
 namespace Spel.Classes.Character
 {
-    // Bron jump + gravity: https://www.youtube.com/watch?v=ZLxIShw-7ac
-    class Hero : IGameObject
+    // Bron jump + gravity: Oyyou. (2012, 8 februari). XNA Tutorial 23 - Jumping and Gravity. YouTube. https://www.youtube.com/watch?v=ZLxIShw-7ac
+    class Hero : IDrawable, IUpdateable
     {
         // Variabelen initialiseren
         bool hasJumped, reachedTop;
@@ -155,6 +151,11 @@ namespace Spel.Classes.Character
                 hasJumped = true;
                 position.Y -= 3f;
                 speed.Y = -6f;
+            }
+
+            if (position.Y + height > 787)
+            {
+                position.Y = 787 - height;
             }
         }
 

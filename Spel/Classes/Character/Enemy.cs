@@ -1,18 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SharpDX.Direct2D1.Effects;
 using Spel.Classes.Animations;
 using Spel.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+using IDrawable = Spel.Interfaces.IDrawable;
+using IUpdateable = Spel.Interfaces.IUpdateable;
 
 namespace Spel.Classes.Character
 {
-    abstract class Enemy : IGameObject
+    abstract class Enemy : IDrawable, IUpdateable, IDieable
     {
         public Rectangle rectangle;
         public bool isAlive { get; private set; }

@@ -12,7 +12,8 @@ using System.Threading.Tasks;
 
 namespace Spel.Classes.GameStates
 {
-    // Bron: https://github.com/Oyyou/MonoGame_Tutorials/blob/master/MonoGame_Tutorials/Tutorial013
+    // Bron Gamestates
+    // Oyyou. (z.d.). MonoGame Tutorials 13. GitHub. https://github.com/Oyyou/MonoGame_Tutorials/tree/master/MonoGame_Tutorials/Tutorial013
     public abstract class GameState
     {
         protected Game _game;

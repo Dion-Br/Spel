@@ -1,19 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using SharpDX.MediaFoundation;
 using Spel.Classes.Character;
 using Spel.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spel.Classes
 {
     public class KeyboardReader : IInputReader
     {
-        public bool IsDestinationInput => false;
         public Movement movement { get; private set; } = new Movement();
         public bool Jump { get; private set; }
 

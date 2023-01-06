@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Spel.Classes.Level
 {
-    // Bron: https://www.youtube.com/watch?v=PKlHcxFAEk0
+    // Bron: Oyyou. (2013a, januari 16). XNA Tutorial 40 - Creating a Tile Map (1/3). YouTube. https://www.youtube.com/watch?v=PKlHcxFAEk0
     public class Tiles
     {
         protected Texture2D texture;

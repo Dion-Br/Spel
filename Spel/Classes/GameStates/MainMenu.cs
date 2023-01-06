@@ -58,7 +58,7 @@ namespace Spel.Classes.GameStates
             // Knoppen updaten
             foreach (var button in buttons)
             {
-                button.Update();
+                button.Update(gameTime);
             }
         }
     }

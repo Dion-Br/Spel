@@ -2,16 +2,11 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using SharpDX.X3DAudio;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using IUpdateable = Spel.Interfaces.IUpdateable;
 
 namespace Spel.Classes.Button
 {
-    abstract class cButton
+    abstract class cButton : IUpdateable
     {
         protected Game1 _game;
         protected GraphicsDevice _graphicsDevice;
@@ -61,7 +56,7 @@ namespace Spel.Classes.Button
         public bool Clicked { get; private set; }
 
         // Update functie
-        public void Update()
+        public void Update(GameTime gameTime)
         {
             // Kleur veranderen als muis over knop gaat
             var mouseState = Mouse.GetState();

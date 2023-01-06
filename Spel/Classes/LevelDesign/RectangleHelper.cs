@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace Spel.Classes.Level
 {
-    // Bron: https://www.youtube.com/watch?v=PKlHcxFAEk0
-    // https://www.youtube.com/watch?v=l0WS5SvKdY4
+    // Bron: Oyyou. (2013, 30 januari). XNA Tutorial 40 - Creating a Tile Map (2/3). YouTube. https://www.youtube.com/watch?v=l0WS5SvKdY4
     public static class RectangleHelper
     {
         public static bool TouchTopOf(this Rectangle r1, Rectangle r2)
